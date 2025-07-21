@@ -1,9 +1,3 @@
-config/
-controllers/
-models/
-routes/
-h.txt
-
 
 # Logs
 *.log
