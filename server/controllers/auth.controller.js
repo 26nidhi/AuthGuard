@@ -86,3 +86,18 @@ export const logout = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
+export const sendVerifyOtp = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const user = await User.findOne(userId);
+    if (user.isaccountVerified) {
+      return res.json({
+        success: false,
+        message: "Account Already verified",
+      });
+    }
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
