@@ -99,11 +99,29 @@ export const sendVerifyOtp = async (req, res) => {
         message: "Account Already verified",
       });
     }
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+    user.verifyOtp = otp;
+    user.verifyOtpExpireAt = Date.now() + 24 * 60 * 60 ** 1000;
+
+    await user.save();
+    const mailOption = {
+      from: process.env.SENDER_EMAIL,
+      to: email,
+      subject: "Account Verification OTP",
+      text: `Your OTP is ${otp}. Verify your account using this OTP.`,
+    };
+
+    await transporter.sendMail(mailOption);
+    return res.json({
+      success: true,
+      message: "Verification OTP sent on email.",
+    });
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }
 };
 
+// Verify email using otp
 export const verifyEmail = async (req, res) => {
   const { userId, otp } = req.body;
   if (!userId || !otp) {
@@ -126,6 +144,32 @@ export const verifyEmail = async (req, res) => {
 
     await user.save();
     return res.json({ success: true, message: "Email Verified successfully" });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+//check if user is authenticated
+
+export const isAuthenticated = async (req, res) => {
+  try {
+    return res.json({ success: true });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+export const sendResetOtp = async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.json({ success: false, message: "Email is required" });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }
