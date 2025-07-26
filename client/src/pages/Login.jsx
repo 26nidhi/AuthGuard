@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
-import { assets } from '../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext, useState } from "react";
+import { assets } from "../assets/assets";
+import { useNavigate } from "react-router-dom";
+import { AppComponent } from "../context/AppContext";
 
 const Login = () => {
-  const navigate = useNavigate()
-  const [state, setSate] = useState('Sign Up')
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const navigate = useNavigate();
+  const { backendUrl, setIsLoggedin } = useContext(AppComponent);
+
+  const [state, setSate] = useState("Sign Up");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-200 to-purple-400">
       <img
-        onClick={()=>navigate('/')}
+        onClick={() => navigate("/")}
         src={assets.logo}
         alt=""
         className="absolute left-5 sm:left-20 top-5 w-28 sm:w-32 cursor-pointer"
@@ -62,7 +65,10 @@ const Login = () => {
               required
             />
           </div>
-          <p onClick={ ()=>navigate('/reset-password')} className="mb-4 text-indigo-500 cursor-pointer">
+          <p
+            onClick={() => navigate("/reset-password")}
+            className="mb-4 text-indigo-500 cursor-pointer"
+          >
             Forgot password?
           </p>
           <button className="w-full py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-900 text-white font-medium">
@@ -93,8 +99,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Login
-
-
+export default Login;
