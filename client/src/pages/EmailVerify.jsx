@@ -54,6 +54,10 @@ function EmailVerify() {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    isLoggedin && userData && userData.isAccountVerified && navigate("/");
+  }, [isLoggedin, userData]);
   return (
     <div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-200 to-purple-400">
       <img
@@ -62,7 +66,10 @@ function EmailVerify() {
         alt=""
         class="absolute left-5 sm:left-20 top-5 w-28 sm:w-32 cursor-pointer"
       />
-      <form class="bg-slate-900 p-8 rounded-lg shadow-lg w-96 text-sm">
+      <form
+        onSubmit={onSubmitHandler}
+        class="bg-slate-900 p-8 rounded-lg shadow-lg w-96 text-sm"
+      >
         <h1 class="text-white text-2xl font-semibold text-center mb-4">
           Email Verify OTP
         </h1>
