@@ -1,9 +1,10 @@
 import { createContext, useEffect } from "react";
 import { toast } from "react-toastify";
-
+import axios from "axios";
 export const AppComponent = createContext();
 
 export const AppContextProvider = (props) => {
+  axios.defaults.withCredentials = true;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [userData, setUserData] = useState(false);
