@@ -56,7 +56,7 @@ function EmailVerify() {
   };
 
   useEffect(() => {
-    isLoggedin && userData && userData.isAccountVerified && navigate("/");
+    isLoggedin && userData && userData.isaccountVerified && navigate("/");
   }, [isLoggedin, userData]);
   return (
     <div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-200 to-purple-400">
